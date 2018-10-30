@@ -1,5 +1,7 @@
 #include "native.h"
 
+#include "sw_resources.h"
+
 using namespace std;
 
 namespace sw
@@ -38,8 +40,7 @@ namespace sw
         BOOL bRet;
         while (bRet = take_over_message(msg))
         {
-            if (bRet < 0)
-                throw message_loop_error();
+            SW_ASSERT_EXPR(bRet >= 0, MESSAGE_LOOP_ERROR);
             if (!wnd_num)
                 PostQuitMessage(0);
         }
@@ -66,8 +67,7 @@ namespace sw
                               params.style, params.x, params.y, params.width, params.height,
                               params.parent ? params.parent->hWnd : SW_NULLPTR,
                               SW_NULLPTR, current_app.instance(), SW_NULLPTR);
-        if (!hWnd)
-            throw create_wnd_error();
+        SW_ASSERT_EXPR(hWnd, CREATE_WND_FAILED);
     }
 
     LRESULT native_window::wnd_proc(const message& msg)

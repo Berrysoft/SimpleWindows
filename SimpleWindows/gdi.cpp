@@ -57,6 +57,38 @@ namespace sw
     {
         SetMapMode(hDC, mode);
     }
+    int dev_context::text_align() SW_NOEXCEPT
+    {
+        return GetTextAlign(hDC);
+    }
+    void dev_context::text_align(int mode) SW_NOEXCEPT
+    {
+        SetTextAlign(hDC, mode);
+    }
+    int dev_context::back_mode() SW_NOEXCEPT
+    {
+        return GetBkMode(hDC);
+    }
+    void dev_context::back_mode(int mode) SW_NOEXCEPT
+    {
+        SetBkMode(hDC, mode);
+    }
+    COLORREF dev_context::text_color() SW_NOEXCEPT
+    {
+        return GetTextColor(hDC);
+    }
+    void dev_context::text_color(COLORREF color) SW_NOEXCEPT
+    {
+        SetTextColor(hDC, color);
+    }
+    COLORREF dev_context::back_color() SW_NOEXCEPT
+    {
+        return GetBkColor(hDC);
+    }
+    void dev_context::back_color(COLORREF color) SW_NOEXCEPT
+    {
+        SetBkColor(hDC, color);
+    }
 
     template <typename T>
     SW_CONSTEXPR gdi_ptr<T> select_ptr(HDC hDC, T*& orip, gdi_ptr<T>&& p) SW_NOEXCEPT
@@ -109,9 +141,18 @@ namespace sw
     {
         SW_ASSERT_EXPR(Arc(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y), GDI_DRAWING_FAILED);
     }
+    void dev_context::draw_cross(POINT p, int length) SW_NOEXCEPT
+    {
+        draw_line({ p.x - length / 2, p.y }, { p.x + length / 2, p.y });
+        draw_line({ p.x, p.y - length / 2 }, { p.x, p.y + length / 2 });
+    }
     void dev_context::draw_ellipse(RECT r) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(Ellipse(hDC, r.left, r.top, r.right, r.bottom), GDI_DRAWING_FAILED);
+    }
+    void dev_context::draw_ellipse(POINT p, int radius) SW_NOEXCEPT
+    {
+        SW_ASSERT_EXPR(Ellipse(hDC, p.x - radius, p.y - radius, p.x + radius, p.y + radius), GDI_DRAWING_FAILED);
     }
     void dev_context::draw_line(POINT p1, POINT p2) SW_NOEXCEPT
     {
@@ -121,21 +162,13 @@ namespace sw
     {
         SW_ASSERT_EXPR(Pie(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y), GDI_DRAWING_FAILED);
     }
-    void dev_context::draw_polygon(initializer_list<POINT> ps) SW_NOEXCEPT
+    void dev_context::draw_polygon(array_view<POINT> ps) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(Polygon(hDC, ps.begin(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
     }
-    void dev_context::draw_polygon(const vector<POINT>& ps) SW_NOEXCEPT
-    {
-        SW_ASSERT_EXPR(Polygon(hDC, &ps.front(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
-    }
-    void dev_context::draw_polyline(initializer_list<POINT> ps) SW_NOEXCEPT
+    void dev_context::draw_polyline(array_view<POINT> ps) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(Polyline(hDC, ps.begin(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
-    }
-    void dev_context::draw_polyline(const vector<POINT>& ps) SW_NOEXCEPT
-    {
-        SW_ASSERT_EXPR(Polyline(hDC, &ps.front(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
     }
     void dev_context::draw_rect(RECT r) SW_NOEXCEPT
     {
@@ -148,6 +181,11 @@ namespace sw
     void dev_context::draw_string(POINT p, wstring str) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(TextOut(hDC, p.x, p.y, str.c_str(), static_cast<int>(str.length())), GDI_DRAWING_FAILED);
+    }
+
+    void dev_context::copy_dc_bit(RECT t, const dev_context& dc, POINT p, DWORD rop) SW_NOEXCEPT
+    {
+        SW_ASSERT_EXPR(BitBlt(hDC, t.left, t.top, t.right, t.bottom, dc.hDC, p.x, p.y, rop), GDI_DRAWING_FAILED);
     }
 
     window_paint_dc::window_paint_dc(HWND hWnd) SW_NOEXCEPT : dev_context(), hWnd(hWnd)
@@ -173,6 +211,21 @@ namespace sw
         hDC = GetDC(hWnd);
     }
     window_dc::~window_dc()
+    {
+        if (!released)
+        {
+            dev_context::~dev_context();
+            SW_ASSERT_EXPR(ReleaseDC(hWnd, hDC), RELEASE_DC_FAILED);
+        }
+    }
+
+    window_compatible_dc::window_compatible_dc(HWND hWnd, int width, int height) SW_NOEXCEPT : dev_context(), hWnd(hWnd)
+    {
+        window_dc main_dc(hWnd);
+        hDC = CreateCompatibleDC(main_dc.handle());
+        set_bitmap(compatible_bitmap{ main_dc, width, height }.create());
+    }
+    window_compatible_dc::~window_compatible_dc()
     {
         if (!released)
         {

@@ -41,13 +41,6 @@ namespace sw
         int height;
         bitmap_ptr create() const;
     };
-    struct window_compatible_bitmap
-    {
-        const native_window& wnd;
-        int width;
-        int height;
-        bitmap_ptr create() const;
-    };
 
     struct solid_brush
     {

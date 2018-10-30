@@ -18,13 +18,6 @@ namespace sw
         LPARAM lParam;
     };
 
-    class create_wnd_error : public std::exception
-    {
-    };
-    class message_loop_error : public std::exception
-    {
-    };
-
     class native_window;
 
     class app

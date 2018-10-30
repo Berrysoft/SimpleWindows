@@ -6,6 +6,8 @@
 
 namespace sw
 {
+    class control_container;
+
     class common_control : public native_window
     {
     private:
@@ -29,6 +31,8 @@ namespace sw
 
         RECT client_rect() const;
         void client_rect(RECT rect, bool redraw = true);
+
+		void move_center(bool redraw = true);
     };
 
     class control_container : public common_control

@@ -33,10 +33,7 @@ namespace sw
             }
             wstring clsname = TEXT("Windows.") + tname;
             cls.lpszClassName = clsname.c_str();
-            if (!RegisterClassEx(&cls))
-            {
-                throw create_wnd_error();
-            }
+            SW_ASSERT_EXPR(RegisterClassEx(&cls), CREATE_WND_FAILED);
             classes.emplace(style, clsname);
             create_params.class_name = clsname;
         }
@@ -115,8 +112,7 @@ namespace sw
         {
             MSG msg;
             BOOL bRet = take_over_message(msg);
-            if (bRet < 0)
-                throw message_loop_error();
+            SW_ASSERT_EXPR(bRet >= 0, MESSAGE_LOOP_ERROR);
             if (!bRet)
                 break;
         }
@@ -143,6 +139,11 @@ namespace sw
     dev_context window::get_dc()
     {
         return window_dc(hWnd);
+    }
+
+    dev_context window::get_buffered_dc(int width, int height)
+    {
+        return window_compatible_dc(hWnd, width, height);
     }
 
     inline mouse_button get_mouse_button(WPARAM wParam)

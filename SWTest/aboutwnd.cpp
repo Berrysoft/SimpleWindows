@@ -7,7 +7,7 @@ aboutwnd::aboutwnd() : window(L"About", WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_
 {
     text(L"About SimpleWindowsTest...");
 
-    full_rect({ 200, 200, 600, 400 });
+    full_rect({ 200, 200, 800, 600 });
     paint(&aboutwnd::paint_print, this);
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "utility.h"
 
+#include "array_view.h"
 #include "gdi_ptr.h"
 #include <initializer_list>
 #include <memory>
@@ -33,6 +34,14 @@ namespace sw
 
         int map_mode() SW_NOEXCEPT;
         void map_mode(int mode) SW_NOEXCEPT;
+        int text_align() SW_NOEXCEPT;
+        void text_align(int mode) SW_NOEXCEPT;
+        int back_mode() SW_NOEXCEPT;
+        void back_mode(int mode) SW_NOEXCEPT;
+        COLORREF text_color() SW_NOEXCEPT;
+        void text_color(COLORREF color) SW_NOEXCEPT;
+        COLORREF back_color() SW_NOEXCEPT;
+        void back_color(COLORREF color) SW_NOEXCEPT;
 
         bitmap_ptr set_bitmap(bitmap_ptr&& p) SW_NOEXCEPT;
         brush_ptr set_brush(brush_ptr&& p) SW_NOEXCEPT;
@@ -40,15 +49,17 @@ namespace sw
         pen_ptr set_pen(pen_ptr&& p) SW_NOEXCEPT;
 
         void draw_arc(RECT r, POINT p1, POINT p2) SW_NOEXCEPT;
+        void draw_cross(POINT p, int length) SW_NOEXCEPT;
         void draw_ellipse(RECT r) SW_NOEXCEPT;
+        void draw_ellipse(POINT p, int radius) SW_NOEXCEPT;
         void draw_line(POINT p1, POINT p2) SW_NOEXCEPT;
         void draw_pie(RECT r, POINT p1, POINT p2) SW_NOEXCEPT;
-        void draw_polygon(std::initializer_list<POINT> ps) SW_NOEXCEPT;
-        void draw_polygon(const std::vector<POINT>& ps) SW_NOEXCEPT;
-        void draw_polyline(std::initializer_list<POINT> ps) SW_NOEXCEPT;
-        void draw_polyline(const std::vector<POINT>& ps) SW_NOEXCEPT;
+        void draw_polygon(array_view<POINT> ps) SW_NOEXCEPT;
+        void draw_polyline(array_view<POINT> ps) SW_NOEXCEPT;
         void draw_rect(RECT r) SW_NOEXCEPT;
         void draw_roundrect(RECT r, SIZE round) SW_NOEXCEPT;
         void draw_string(POINT p, std::wstring str) SW_NOEXCEPT;
+
+        void copy_dc_bit(RECT r, const dev_context& dc, POINT p = { 0, 0 }, DWORD rop = SRCCOPY) SW_NOEXCEPT;
     };
 } // namespace sw

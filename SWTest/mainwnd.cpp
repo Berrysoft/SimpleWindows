@@ -28,7 +28,7 @@ mainwnd::mainwnd() : window(L"Test"), x(300), y(300)
     test_button.is_default(true);
     test_button.text(L"ÄãºÃ£¡");
     test_button.link_note(L"Show a message box.");
-    test_button.full_rect({ 100, 100, 300, 100 });
+    test_button.full_rect({ 100, 100, 400, 200 });
     test_button.shield(true);
     test_button.click([](window& wnd, button&) {
         msgbox{ L"Hello!", L"Hello msgbox", ok_button, information_icon }.show_dialog(wnd);
@@ -56,6 +56,7 @@ void mainwnd::draw_cross(window&, dev_context& dc)
     dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) }.create());
     dc.draw_line({ x - 100, y }, { x + 100, y });
     dc.draw_line({ x, y - 100 }, { x, y + 100 });
+    dc.draw_polyline(initializer_list<POINT>{ { x, y - 100 }, { x - 100, y + 100 }, { x + 100, y + 100 }, { x, y - 100 } });
 }
 
 void mainwnd::click_title(window& wnd, const mouse_args& args)

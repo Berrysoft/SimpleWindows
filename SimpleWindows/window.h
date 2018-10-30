@@ -104,6 +104,7 @@ namespace sw
         void close() const;
 
         dev_context get_dc();
+        dev_context get_buffered_dc(int width, int height);
 
         SW_CONSTEXPR dialog_result dlg_result() const SW_NOEXCEPT { return dlgresult; }
         void dlg_result(dialog_result result) SW_NOEXCEPT { dlgresult = result; }

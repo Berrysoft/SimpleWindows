@@ -159,6 +159,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="array_view.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="control.h" />
     <ClInclude Include="event.h" />

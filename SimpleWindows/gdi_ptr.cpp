@@ -11,14 +11,6 @@ namespace sw
         return bitmap_ptr(CreateCompatibleBitmap(dc.handle(), width, height));
     }
 
-    bitmap_ptr window_compatible_bitmap::create() const
-    {
-        HDC hDC = GetDC(wnd.handle());
-        HBITMAP result = CreateCompatibleBitmap(hDC, width, height);
-        ReleaseDC(wnd.handle(), hDC);
-        return bitmap_ptr(result);
-    }
-
     brush_ptr solid_brush::create() const
     {
         return brush_ptr(CreateSolidBrush(color));

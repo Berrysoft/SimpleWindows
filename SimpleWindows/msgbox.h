@@ -1,6 +1,7 @@
 #pragma once
 #include "utility.h"
 
+#include "array_view.h"
 #include "window.h"
 #include <CommCtrl.h>
 #include <functional>
@@ -82,13 +83,13 @@ namespace sw
     struct taskdlg_button
     {
         int common_button;
-        std::vector<TASKDIALOG_BUTTON> custom_button;
+        array_view<TASKDIALOG_BUTTON> custom_button;
         bool command_link;
         int def_index;
     };
     struct taskdlg_radio_button
     {
-        std::vector<TASKDIALOG_BUTTON> radio_button;
+        array_view<TASKDIALOG_BUTTON> radio_button;
         int def_index;
     };
     struct taskdlg_verification
