@@ -54,6 +54,12 @@
     <ClInclude Include="array_view.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="com_ptr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="itemdlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window.cpp">
@@ -78,6 +84,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="timer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="itemdlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -68,11 +68,11 @@ namespace sw
             config.pszContent = content.c_str();
         config.cButtons = static_cast<UINT>(button.custom_button.size());
         if (!button.custom_button.empty())
-            config.pButtons = &button.custom_button.front();
+            config.pButtons = button.custom_button.cbegin();
         config.nDefaultButton = button.def_index;
         config.cRadioButtons = static_cast<UINT>(radio_button.radio_button.size());
         if (!radio_button.radio_button.empty())
-            config.pRadioButtons = &radio_button.radio_button.front();
+            config.pRadioButtons = radio_button.radio_button.cbegin();
         config.nDefaultRadioButton = radio_button.def_index;
         if (!verification.verification.empty())
             config.pszVerificationText = verification.verification.c_str();
