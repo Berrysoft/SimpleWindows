@@ -31,7 +31,7 @@ mainwnd::mainwnd() : window(L"Test"), x(300), y(300)
     test_button.full_rect({ 100, 100, 400, 200 });
     test_button.shield(true);
     test_button.click([](window& wnd, button&) {
-        msgbox{ L"Hello!", L"Hello msgbox", ok_button, information_icon }.show_dialog(wnd);
+        wnd.show_dialog(msgbox{ L"Hello!", L"Hello msgbox", ok_button, information_icon });
     });
 }
 
@@ -106,24 +106,21 @@ void mainwnd::start_new(window&, const mouse_args& args)
     if (args.button == middle_button)
     {
         aboutwnd w;
-        w.show_dialog(*this);
+        show_dialog(w);
     }
 }
 
 void mainwnd::wnd_closing(window& wnd, bool& handled)
 {
-    auto result =
-        taskdlg{
-            L"Closing",
-            L"Are you going to close?",
-            L"This is a Task Dialog.",
-            { taskdlg_information },
-            taskdlg_button{
-                (taskdlg_yes_button | taskdlg_no_button),
-                {},
-                false,
-                IDNO }
-        }
-            .show_dialog(wnd);
+    auto result = wnd.show_dialog(taskdlg{
+        L"Closing",
+        L"Are you going to close?",
+        L"This is a Task Dialog.",
+        { taskdlg_information },
+        taskdlg_button{
+            (taskdlg_yes_button | taskdlg_no_button),
+            {},
+            false,
+            IDNO } });
     handled = result.button_index == IDNO;
 }

@@ -52,7 +52,7 @@ namespace sw
 
     public:
         dialog_result show() const;
-        dialog_result show_dialog(const window& owner) const;
+        dialog_result show(const window& owner) const;
 
     private:
         dialog_result show(HWND howner) const;
@@ -131,7 +131,7 @@ namespace sw
 
     public:
         taskdlg_result show() const;
-        taskdlg_result show_dialog(const window& owner) const;
+        taskdlg_result show(const window& owner) const;
 
     private:
         taskdlg_result show(HWND howner) const;

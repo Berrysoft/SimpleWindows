@@ -99,9 +99,15 @@ namespace sw
 
         void show() const;
         void show(int show) const;
-        dialog_result show_dialog(const window& owner);
+        dialog_result show(const window& owner);
         void refresh(bool redraw = true) const;
         void close() const;
+
+        template <typename Dialog>
+        auto show_dialog(Dialog&& dialog) const -> decltype(dialog.show(*this))
+        {
+            return dialog.show(*this);
+        }
 
         dev_context get_dc();
         dev_context get_buffered_dc(int width, int height);

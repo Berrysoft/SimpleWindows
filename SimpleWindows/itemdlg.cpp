@@ -12,7 +12,7 @@ namespace sw
     {
         return show(SW_NULLPTR);
     }
-    HRESULT item_dlg::show_dialog(const window& owner)
+    HRESULT item_dlg::show(const window& owner)
     {
         return show(owner.handle());
     }

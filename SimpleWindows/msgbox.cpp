@@ -8,7 +8,7 @@ namespace sw
     {
         return show(SW_NULLPTR);
     }
-    dialog_result msgbox::show_dialog(const window& owner) const
+    dialog_result msgbox::show(const window& owner) const
     {
         return show(owner.handle());
     }
@@ -26,7 +26,7 @@ namespace sw
         return show(SW_NULLPTR);
     }
 
-    taskdlg_result taskdlg::show_dialog(const window& owner) const
+    taskdlg_result taskdlg::show(const window& owner) const
     {
         return show(owner.handle());
     }

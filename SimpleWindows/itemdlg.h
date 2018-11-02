@@ -15,7 +15,7 @@ namespace sw
 
     public:
         HRESULT show();
-        HRESULT show_dialog(const window& owner);
+        HRESULT show(const window& owner);
 
     private:
         HRESULT show(HWND owner);

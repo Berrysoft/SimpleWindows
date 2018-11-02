@@ -98,7 +98,7 @@ namespace sw
         ShowWindow(hWnd, show);
     }
 
-    dialog_result window::show_dialog(const window& owner)
+    dialog_result window::show(const window& owner)
     {
         ismodal = true;
         show();
