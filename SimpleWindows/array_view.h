@@ -24,6 +24,8 @@ namespace sw
 
     public:
         SW_CONSTEXPR array_view() SW_NOEXCEPT : start(SW_NULLPTR), count(0) {}
+        SW_CONSTEXPR array_view(std::initializer_list<value_type> list)
+            : start(const_cast<pointer>(list.begin())), count(list.size()) {}
         template <typename Container>
         SW_CONSTEXPR array_view(Container&& list) : start(const_cast<pointer>(&*std::begin(list))), count(std::size(list))
         {
@@ -31,6 +33,43 @@ namespace sw
         template <size_type N>
         SW_CONSTEXPR array_view(value_type (&arr)[N]) SW_NOEXCEPT : start(arr), count(N)
         {
+        }
+
+        SW_CONSTEXPR array_view& operator=(std::initializer_list<value_type> list)
+        {
+            start = const_cast<pointer>(list.begin());
+            size = list.size();
+            return *this;
+        }
+        template <typename Container>
+        SW_CONSTEXPR array_view& operator=(Container&& list)
+        {
+            start = const_cast<pointer>(&*std::begin(list));
+            count = std::size(list);
+            return *this;
+        }
+        template <size_type N>
+        SW_CONSTEXPR array_view& operator=(value_type (&arr)[N]) SW_NOEXCEPT
+        {
+            start = arr;
+            count = N;
+            return *this;
+        }
+
+        SW_CONSTEXPR reference operator[](size_type index) SW_NOEXCEPT { return start[index]; }
+        SW_CONSTEXPR const_reference operator[](size_type index) const SW_NOEXCEPT { return start[index]; }
+
+        SW_CONSTEXPR reference at(size_type index)
+        {
+            if (index >= count)
+                throw std::out_of_range();
+            return start[index];
+        }
+        SW_CONSTEXPR const_reference at(size_type index) const
+        {
+            if (index >= count)
+                throw std::out_of_range();
+            return start[index];
         }
 
         SW_CONSTEXPR size_type size() const SW_NOEXCEPT { return count; }

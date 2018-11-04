@@ -37,26 +37,26 @@ mainwnd::mainwnd() : window(L"Test"), x(300), y(300)
 
 void mainwnd::draw_rect(window&, dev_context& dc)
 {
-    dc.set_pen(pen{ PS_SOLID, 3, RGB(192, 192, 0) }.create());
-    auto b = dc.set_brush(solid_brush{ RGB(192, 192, 0) }.create());
+    dc.set_pen(pen{ PS_SOLID, 3, RGB(192, 192, 0) });
+    auto b = dc.set_brush(solid_brush{ RGB(192, 192, 0) });
     dc.draw_rect({ x - 100, y - 100, x + 100, y + 100 });
     dc.set_brush(move(b));
 }
 
 void mainwnd::draw_circ(window&, dev_context& dc)
 {
-    dc.set_pen(pen{ PS_SOLID, 2, RGB(0, 192, 192) }.create());
-    auto b = dc.set_brush(hatch_brush{ HS_DIAGCROSS, RGB(0, 192, 192) }.create());
+    dc.set_pen(pen{ PS_SOLID, 2, RGB(0, 192, 192) });
+    auto b = dc.set_brush(hatch_brush{ HS_DIAGCROSS, RGB(0, 192, 192) });
     dc.draw_ellipse({ x - 100, y - 100, x + 100, y + 100 });
     dc.set_brush(move(b));
 }
 
 void mainwnd::draw_cross(window&, dev_context& dc)
 {
-    dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) }.create());
+    dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) });
     dc.draw_line({ x - 100, y }, { x + 100, y });
     dc.draw_line({ x, y - 100 }, { x, y + 100 });
-    dc.draw_polyline(initializer_list<POINT>{ { x, y - 100 }, { x - 100, y + 100 }, { x + 100, y + 100 }, { x, y - 100 } });
+    dc.draw_polyline({ { x, y - 100 }, { x - 100, y + 100 }, { x + 100, y + 100 }, { x, y - 100 } });
 }
 
 void mainwnd::click_title(window& wnd, const mouse_args& args)
@@ -85,7 +85,7 @@ void mainwnd::drawing(window& wnd, const mouse_args& args)
     if (args.button & left_button)
     {
         dev_context dc = wnd.get_dc();
-        dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) }.create());
+        dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) });
         dc.draw_line(prev, args.pos);
         prev = args.pos;
     }
@@ -96,7 +96,7 @@ void mainwnd::end_drawing(window& wnd, const mouse_args& args)
     if (args.button == left_button)
     {
         dev_context dc = wnd.get_dc();
-        dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) }.create());
+        dc.set_pen(pen{ PS_SOLID, 1, RGB(192, 0, 192) });
         dc.draw_line(prev, args.pos);
     }
 }

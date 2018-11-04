@@ -44,9 +44,32 @@ namespace sw
         void back_color(COLORREF color) SW_NOEXCEPT;
 
         bitmap_ptr set_bitmap(bitmap_ptr&& p) SW_NOEXCEPT;
+        template <typename Creater>
+        bitmap_ptr set_bitmap(Creater&& c) SW_NOEXCEPT
+        {
+            return set_bitmap(c.create());
+        }
+
         brush_ptr set_brush(brush_ptr&& p) SW_NOEXCEPT;
+        template <typename Creater>
+        brush_ptr set_brush(Creater&& c) SW_NOEXCEPT
+        {
+            return set_brush(c.create());
+        }
+
         font_ptr set_font(font_ptr&& p) SW_NOEXCEPT;
+        template <typename Creater>
+        font_ptr set_font(Creater&& c) SW_NOEXCEPT
+        {
+            return set_font(c.create());
+        }
+
         pen_ptr set_pen(pen_ptr&& p) SW_NOEXCEPT;
+        template <typename Creater>
+        pen_ptr set_pen(Creater&& c) SW_NOEXCEPT
+        {
+            return set_pen(c.create());
+        }
 
         void draw_arc(RECT r, POINT p1, POINT p2) SW_NOEXCEPT;
         void draw_cross(POINT p, int length) SW_NOEXCEPT;
