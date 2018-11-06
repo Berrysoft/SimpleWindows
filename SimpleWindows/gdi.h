@@ -3,9 +3,9 @@
 
 #include "array_view.h"
 #include "gdi_ptr.h"
+#include "string_type.h"
 #include <initializer_list>
 #include <memory>
-#include <string>
 #include <vector>
 
 namespace sw
@@ -81,7 +81,7 @@ namespace sw
         void draw_polyline(array_view<POINT> ps) SW_NOEXCEPT;
         void draw_rect(RECT r) SW_NOEXCEPT;
         void draw_roundrect(RECT r, SIZE round) SW_NOEXCEPT;
-        void draw_string(POINT p, std::wstring str) SW_NOEXCEPT;
+        void draw_string(POINT p, const string_t& str) SW_NOEXCEPT;
 
         void copy_dc_bit(RECT r, const dev_context& dc, POINT p = { 0, 0 }, DWORD rop = SRCCOPY) SW_NOEXCEPT;
     };

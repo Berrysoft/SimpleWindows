@@ -178,7 +178,7 @@ namespace sw
     {
         SW_ASSERT_EXPR(RoundRect(hDC, r.left, r.top, r.right, r.bottom, round.cx, round.cy), GDI_DRAWING_FAILED);
     }
-    void dev_context::draw_string(POINT p, wstring str) SW_NOEXCEPT
+    void dev_context::draw_string(POINT p, const string_t& str) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(TextOut(hDC, p.x, p.y, str.c_str(), static_cast<int>(str.length())), GDI_DRAWING_FAILED);
     }

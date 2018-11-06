@@ -42,8 +42,8 @@ namespace sw
     };
     struct msgbox
     {
-        std::wstring text;
-        std::wstring caption;
+        string_t text;
+        string_t caption;
         msgbox_button button;
         msgbox_icon icon;
         msgbox_def_button def_button;

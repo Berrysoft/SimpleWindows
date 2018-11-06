@@ -5,7 +5,6 @@
 #include "event.h"
 #include "window.h"
 #include <CommCtrl.h>
-#include <string>
 
 namespace sw
 {
@@ -32,8 +31,8 @@ namespace sw
         bool is_default() const override;
         void is_default(bool b) override;
 
-        std::wstring link_note() const;
-        void link_note(const std::wstring& note);
+        string_t link_note() const;
+        void link_note(const string_t& note);
 
         void shield(bool required);
     };

@@ -87,7 +87,7 @@ namespace sw
         bool ismodal;
 
     public:
-        window(const std::wstring& title = {}, int style = WS_OVERLAPPEDWINDOW);
+        window(const string_t& title = {}, int style = WS_OVERLAPPEDWINDOW);
         virtual ~window() override;
 
         cursor_obs_ptr cursor() const;

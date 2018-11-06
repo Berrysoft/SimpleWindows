@@ -9,9 +9,9 @@ using namespace std;
 
 namespace sw
 {
-    map<int, wstring> classes;
+    map<int, string_t> classes;
 
-    window::window(const std::wstring& name, int style) : control_container()
+    window::window(const string_t& name, int style) : control_container()
     {
         current_app.wnd_num++;
         cls.cbSize = sizeof(WNDCLASSEX);
@@ -24,14 +24,14 @@ namespace sw
         if (it == classes.end())
         {
             cls.hInstance = current_app.hInstance;
-            wstring tname = name;
+            string_t tname = name;
             if (tname.empty())
             {
                 wostringstream oss;
                 oss << hex << uppercase << style;
                 tname = oss.str();
             }
-            wstring clsname = TEXT("Windows.") + tname;
+            string_t clsname = TEXT("Windows.") + tname;
             cls.lpszClassName = clsname.c_str();
             SW_ASSERT_EXPR(RegisterClassEx(&cls), CREATE_WND_FAILED);
             classes.emplace(style, clsname);

@@ -34,6 +34,10 @@ namespace sw
         SW_CONSTEXPR array_view(value_type (&arr)[N]) SW_NOEXCEPT : start(arr), count(N)
         {
         }
+        template <typename P>
+        SW_CONSTEXPR array_view(const P* p, size_type size) SW_NOEXCEPT : start(const_cast<pointer>(p)), count(size)
+        {
+        }
 
         SW_CONSTEXPR array_view& operator=(std::initializer_list<value_type> list)
         {

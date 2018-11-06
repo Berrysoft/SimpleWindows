@@ -3,6 +3,8 @@
 
 #include "gdi_ptr.h"
 #include "native.h"
+#include "string_type.h"
+#include <map>
 
 namespace sw
 {
@@ -23,8 +25,8 @@ namespace sw
         font_obs_ptr ctrl_font() const;
         void ctrl_font(font_ptr&& p);
 
-        std::wstring text() const;
-        void text(const std::wstring& s);
+        string_t text() const;
+        void text(const string_t& s);
 
         RECT full_rect() const;
         void full_rect(RECT rect, bool redraw = true);
@@ -32,7 +34,7 @@ namespace sw
         RECT client_rect() const;
         void client_rect(RECT rect, bool redraw = true);
 
-		void move_center(bool redraw = true);
+        void move_center(bool redraw = true);
     };
 
     class control_container : public common_control

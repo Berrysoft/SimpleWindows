@@ -60,6 +60,9 @@
     <ClInclude Include="itemdlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="string_type.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="window.cpp">

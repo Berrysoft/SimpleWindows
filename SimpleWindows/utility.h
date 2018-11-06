@@ -4,10 +4,6 @@
 #define NOMINMAX
 #include <Windows.h>
 
-#ifndef UNICODE
-#error This library only supports Unicode charset.
-#endif // !UNICODE
-
 #if !defined(SW_CXX11) && (__cplusplus >= 201103L || _MSVC_LANG >= 201103L)
 #define SW_CXX11
 #endif

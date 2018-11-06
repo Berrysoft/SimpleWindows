@@ -2,8 +2,8 @@
 #include "utility.h"
 
 #include "native.h"
+#include "string_type.h"
 #include "sw_resources.h"
-#include <string>
 
 namespace sw
 {
@@ -56,7 +56,7 @@ namespace sw
 
     struct font
     {
-        std::wstring name;
+        string_t name;
         int height;
         int width;
         int escapement;

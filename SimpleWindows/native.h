@@ -1,9 +1,7 @@
 #pragma once
 #include "utility.h"
 
-#include <exception>
-#include <map>
-#include <string>
+#include "string_type.h"
 
 namespace sw
 {
@@ -24,7 +22,7 @@ namespace sw
     {
     private:
         HINSTANCE hInstance;
-        std::wstring cline;
+        string_t cline;
         int cshow;
 
     public:
@@ -35,7 +33,7 @@ namespace sw
         int run(const native_window& wnd) const;
 
         SW_CONSTEXPR HINSTANCE instance() const SW_NOEXCEPT { return hInstance; }
-        SW_CONSTEXPR const std::wstring& cmd_line() const SW_NOEXCEPT { return cline; }
+        SW_CONSTEXPR const string_t& cmd_line() const SW_NOEXCEPT { return cline; }
         SW_CONSTEXPR int cmd_show() const SW_NOEXCEPT { return cshow; }
 
     private:
@@ -45,8 +43,8 @@ namespace sw
 
     struct window_create_params
     {
-        std::wstring class_name;
-        std::wstring window_name;
+        string_t class_name;
+        string_t window_name;
         DWORD style;
         DWORD ex_style;
         int x;

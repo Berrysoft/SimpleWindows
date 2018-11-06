@@ -55,14 +55,14 @@ namespace sw
         button_is_def(hWnd, BS_DEFCOMMANDLINK, b);
     }
 
-    std::wstring command_link::link_note() const
+    string_t command_link::link_note() const
     {
         std::size_t count = Button_GetNoteLength(hWnd);
-        wstring result(count, L'\0');
+        string_t result(count, L'\0');
         Button_GetNote(hWnd, &result.front(), count);
         return result;
     }
-    void command_link::link_note(const std::wstring& note)
+    void command_link::link_note(const string_t& note)
     {
         Button_SetNote(hWnd, note.c_str());
     }

@@ -13,9 +13,7 @@ namespace sw
         if (container != c)
         {
             if (c)
-            {
                 c->add_control(*this);
-            }
             else
                 c->remove_control(*this);
             container = c;
@@ -32,15 +30,15 @@ namespace sw
         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(p.release()), TRUE);
     }
 
-    wstring common_control::text() const
+    string_t common_control::text() const
     {
         int count = GetWindowTextLength(hWnd);
-        wstring result(count, L'\0');
+        string_t result(count, L'\0');
         GetWindowText(hWnd, &result.front(), count);
         return result;
     }
 
-    void common_control::text(const wstring& s)
+    void common_control::text(const string_t& s)
     {
         SW_ASSERT(SetWindowText(hWnd, s.c_str()));
     }
