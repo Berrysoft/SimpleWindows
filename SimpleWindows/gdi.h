@@ -71,6 +71,8 @@ namespace sw
             return set_pen(c.create());
         }
 
+		POINT set_org(POINT p) SW_NOEXCEPT;
+
         void draw_arc(RECT r, POINT p1, POINT p2) SW_NOEXCEPT;
         void draw_cross(POINT p, int length) SW_NOEXCEPT;
         void draw_ellipse(RECT r) SW_NOEXCEPT;
@@ -84,5 +86,6 @@ namespace sw
         void draw_string(POINT p, const string_t& str) SW_NOEXCEPT;
 
         void copy_dc_bit(RECT r, const dev_context& dc, POINT p = { 0, 0 }, DWORD rop = SRCCOPY) SW_NOEXCEPT;
+        void strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop = SRCCOPY) SW_NOEXCEPT;
     };
 } // namespace sw

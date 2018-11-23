@@ -46,6 +46,8 @@ namespace sw
         mod_keys mods;
     };
 
+	typedef SIZE size_args;
+
     enum window_state
     {
         hidden_window,
@@ -62,8 +64,6 @@ namespace sw
         window_state state;
         state_change_cause cause;
     };
-
-    using pos_args = RECT;
 
     enum dialog_result
     {
@@ -125,7 +125,7 @@ namespace sw
         EVENT_SENDER_E(mouse_up, window&, const mouse_args&)
         EVENT_SENDER_E(mouse_dbclick, window&, const mouse_args&)
         EVENT_SENDER_E(paint, window&, dev_context&)
-        EVENT_SENDER_E(pos_changed, window&, const pos_args&)
+        EVENT_SENDER_E(size_changed, window&, const size_args&)
         EVENT_SENDER_E(state_changed, window&, const state_args&)
 
     protected:

@@ -285,13 +285,12 @@ namespace sw
             on_key_up(*this, args);
             break;
         }
-        case WM_WINDOWPOSCHANGED:
-        {
-            LPWINDOWPOS ppos = reinterpret_cast<LPWINDOWPOS>(msg.lParam);
-            pos_args args = { ppos->x, ppos->y, ppos->cx, ppos->cy };
-            on_pos_changed(*this, args);
+        case WM_SIZE:
+		{
+            SIZE args = { LOWORD(msg.lParam), HIWORD(msg.lParam) };
+            on_size_changed(*this, args);
             break;
-        }
+		}
         case WM_COMMAND:
         {
             switch (HIWORD(msg.wParam))

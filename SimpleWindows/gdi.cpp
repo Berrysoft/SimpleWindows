@@ -137,6 +137,13 @@ namespace sw
         return select_ptr(hDC, oriHP, move(p));
     }
 
+	POINT dev_context::set_org(POINT p) SW_NOEXCEPT
+	{
+        POINT result;
+        SW_ASSERT(SetWindowOrgEx(hDC, p.x, p.y, &result));
+        return result;
+	}
+
     void dev_context::draw_arc(RECT r, POINT p1, POINT p2) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(Arc(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y), GDI_DRAWING_FAILED);
@@ -186,6 +193,10 @@ namespace sw
     void dev_context::copy_dc_bit(RECT t, const dev_context& dc, POINT p, DWORD rop) SW_NOEXCEPT
     {
         SW_ASSERT_EXPR(BitBlt(hDC, t.left, t.top, t.right, t.bottom, dc.hDC, p.x, p.y, rop), GDI_DRAWING_FAILED);
+    }
+    void dev_context::strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop) SW_NOEXCEPT
+    {
+        SW_ASSERT_EXPR(StretchBlt(hDC, r.left, r.top, r.right - r.left, r.bottom - r.top, dc.hDC, r1.left, r1.top, r1.right - r1.left, r1.bottom - r1.top, rop), GDI_DRAWING_FAILED);
     }
 
     window_paint_dc::window_paint_dc(HWND hWnd) SW_NOEXCEPT : dev_context(), hWnd(hWnd)
