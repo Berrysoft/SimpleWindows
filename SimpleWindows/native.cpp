@@ -23,7 +23,7 @@ namespace sw
 
     BOOL take_over_message(MSG& msg)
     {
-        BOOL bRet = GetMessage(&msg, SW_NULLPTR, 0, 0);
+        BOOL bRet = GetMessage(&msg, nullptr, 0, 0);
         if (bRet > 0)
         {
             TranslateMessage(&msg);
@@ -57,7 +57,7 @@ namespace sw
 
     native_window::~native_window()
     {
-        CloseWindow(hWnd);
+        SendMessage(hWnd, WM_CLOSE, 0, 0);
     }
 
     void native_window::create()
@@ -65,8 +65,8 @@ namespace sw
         const window_create_params& params = create_params;
         hWnd = CreateWindowEx(params.ex_style, params.class_name.c_str(), params.window_name.c_str(),
                               params.style, params.x, params.y, params.width, params.height,
-                              params.parent ? params.parent->hWnd : SW_NULLPTR,
-                              SW_NULLPTR, current_app.instance(), SW_NULLPTR);
+                              params.parent ? params.parent->hWnd : nullptr,
+                              nullptr, current_app.instance(), nullptr);
         SW_ASSERT_EXPR(hWnd, CREATE_WND_FAILED);
     }
 

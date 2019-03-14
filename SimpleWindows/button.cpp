@@ -59,7 +59,7 @@ namespace sw
     {
         std::size_t count = Button_GetNoteLength(hWnd);
         string_t result(count, L'\0');
-        Button_GetNote(hWnd, &result.front(), count);
+        Button_GetNote(hWnd, result.data(), count);
         return result;
     }
     void command_link::link_note(const string_t& note)

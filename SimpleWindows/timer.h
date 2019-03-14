@@ -12,11 +12,11 @@ namespace sw
         UINT elapse;
 
     public:
-        timer(UINT elapse = 1) : id(0), elapse(elapse) {}
+        constexpr timer(UINT elapse = 1) noexcept : id(0), elapse(elapse) {}
         ~timer() { stop(); }
 
-        constexpr operator bool() { return id; }
-        constexpr UINT time_span() const { return elapse; }
+        constexpr operator bool() const noexcept { return id; }
+        constexpr UINT time_span() const noexcept { return elapse; }
         void time_span(UINT e);
 
         void start();

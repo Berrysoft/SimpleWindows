@@ -9,7 +9,7 @@ namespace sw
     template <typename T>
     struct com_delete
     {
-        SW_CONSTEXPR com_delete() SW_NOEXCEPT = default;
+        constexpr com_delete() noexcept = default;
         void operator()(T* ptr) const
         {
             ptr->Release();
@@ -28,7 +28,7 @@ namespace sw
     template <typename T>
     struct co_task_mem_delete
     {
-        SW_CONSTEXPR co_task_mem_delete() SW_NOEXCEPT = default;
+        constexpr co_task_mem_delete() noexcept = default;
         void operator()(T* ptr) const
         {
             CoTaskMemFree(ptr);

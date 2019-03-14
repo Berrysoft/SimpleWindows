@@ -46,7 +46,7 @@ namespace sw
         mod_keys mods;
     };
 
-	typedef SIZE size_args;
+    typedef SIZE size_args;
 
     enum window_state
     {
@@ -104,7 +104,7 @@ namespace sw
         void close() const;
 
         template <typename Dialog>
-        auto show_dialog(Dialog&& dialog) const -> decltype(dialog.show(*this))
+        auto show_dialog(Dialog&& dialog) const
         {
             return dialog.show(*this);
         }
@@ -112,9 +112,9 @@ namespace sw
         dev_context get_dc();
         dev_context get_buffered_dc(int width, int height);
 
-        SW_CONSTEXPR dialog_result dlg_result() const SW_NOEXCEPT { return dlgresult; }
-        void dlg_result(dialog_result result) SW_NOEXCEPT { dlgresult = result; }
-        SW_CONSTEXPR bool is_modal() const SW_NOEXCEPT { return ismodal; }
+        constexpr dialog_result dlg_result() const noexcept { return dlgresult; }
+        void dlg_result(dialog_result result) noexcept { dlgresult = result; }
+        constexpr bool is_modal() const noexcept { return ismodal; }
 
         EVENT_SENDER_E(activate, window&, const activate_args&)
         EVENT_SENDER_E(closing, window&, bool&)

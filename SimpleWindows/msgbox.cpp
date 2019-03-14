@@ -6,7 +6,7 @@ namespace sw
 {
     dialog_result msgbox::show() const
     {
-        return show(SW_NULLPTR);
+        return show(nullptr);
     }
     dialog_result msgbox::show(const window& owner) const
     {
@@ -23,7 +23,7 @@ namespace sw
 
     taskdlg_result taskdlg::show() const
     {
-        return show(SW_NULLPTR);
+        return show(nullptr);
     }
 
     taskdlg_result taskdlg::show(const window& owner) const
@@ -68,11 +68,11 @@ namespace sw
             config.pszContent = content.c_str();
         config.cButtons = static_cast<UINT>(button.custom_button.size());
         if (!button.custom_button.empty())
-            config.pButtons = button.custom_button.cbegin();
+            config.pButtons = button.custom_button.data();
         config.nDefaultButton = button.def_index;
         config.cRadioButtons = static_cast<UINT>(radio_button.radio_button.size());
         if (!radio_button.radio_button.empty())
-            config.pRadioButtons = radio_button.radio_button.cbegin();
+            config.pRadioButtons = radio_button.radio_button.data();
         config.nDefaultRadioButton = radio_button.def_index;
         if (!verification.verification.empty())
             config.pszVerificationText = verification.verification.c_str();

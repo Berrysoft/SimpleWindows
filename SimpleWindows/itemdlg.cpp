@@ -10,7 +10,7 @@ namespace sw
 {
     HRESULT item_dlg::show()
     {
-        return show(SW_NULLPTR);
+        return show(nullptr);
     }
     HRESULT item_dlg::show(const window& owner)
     {
@@ -28,7 +28,7 @@ namespace sw
 
     void item_dlg::filter(array_view<COMDLG_FILTERSPEC> flt)
     {
-        SW_ASSERT_HRESULT(native_dlg->SetFileTypes(static_cast<UINT>(flt.size()), flt.cbegin()));
+        SW_ASSERT_HRESULT(native_dlg->SetFileTypes(static_cast<UINT>(flt.size()), flt.data()));
     }
     void item_dlg::def_ext(const wstring& ext)
     {

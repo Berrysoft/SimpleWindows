@@ -17,7 +17,7 @@ namespace sw
         cls.cbSize = sizeof(WNDCLASSEX);
         cls.lpfnWndProc = wnd_callback;
         cls.cbClsExtra = sizeof(native_window*);
-        cls.hCursor = LoadCursor(SW_NULLPTR, IDC_ARROW);
+        cls.hCursor = LoadCursor(nullptr, IDC_ARROW);
         cls.hIcon = LoadIcon(NULL, IDI_APPLICATION);
         cls.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH));
         auto it = classes.find(style);
@@ -54,7 +54,7 @@ namespace sw
     window::~window()
     {
         native_window::~native_window();
-        SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(SW_NULLPTR));
+        SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(nullptr));
     }
 
     cursor_obs_ptr window::cursor() const
@@ -128,7 +128,7 @@ namespace sw
 
     void window::refresh(bool redraw) const
     {
-        SW_ASSERT(InvalidateRect(hWnd, SW_NULLPTR, redraw));
+        SW_ASSERT(InvalidateRect(hWnd, nullptr, redraw));
     }
 
     void window::close() const

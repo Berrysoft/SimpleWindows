@@ -34,7 +34,7 @@ namespace sw
     {
         int count = GetWindowTextLength(hWnd);
         string_t result(count, L'\0');
-        GetWindowText(hWnd, &result.front(), count);
+        GetWindowText(hWnd, result.data(), count);
         return result;
     }
 
@@ -68,13 +68,12 @@ namespace sw
         RECT client = client_rect();
         int woff = full.right - full.left - (client.right - client.left);
         int hoff = full.bottom - full.top - (client.bottom - client.top);
-        RECT nfull =
-            {
-                full.left,
-                full.top,
-                rect.right - rect.left + woff + full.left,
-                rect.bottom - rect.top + hoff + full.top
-            };
+        RECT nfull = {
+            full.left,
+            full.top,
+            rect.right - rect.left + woff + full.left,
+            rect.bottom - rect.top + hoff + full.top
+        };
         full_rect(nfull, redraw);
     }
 
@@ -113,7 +112,7 @@ namespace sw
     }
     void control_container::remove_control(common_control& c)
     {
-        SetParent(c.handle(), SW_NULLPTR);
+        SetParent(c.handle(), nullptr);
         controls.erase(c.handle());
     }
 } // namespace sw

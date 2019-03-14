@@ -2,6 +2,7 @@
 #include "utility.h"
 
 #include <string>
+#include <string_view>
 
 namespace sw
 {
@@ -11,13 +12,5 @@ namespace sw
     using stringstream_t = std::basic_stringstream<char_t>;
     using istringstream_t = std::basic_istringstream<char_t>;
     using ostringstream_t = std::basic_ostringstream<char_t>;
-} // namespace sw
-
-#ifdef SW_CXX17
-#include <string_view>
-
-namespace sw
-{
     using string_view_t = std::basic_string_view<char_t>;
-}
-#endif // SW_CXX17
+} // namespace sw

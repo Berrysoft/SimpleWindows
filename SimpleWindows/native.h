@@ -32,9 +32,9 @@ namespace sw
         int run() const;
         int run(const native_window& wnd) const;
 
-        SW_CONSTEXPR HINSTANCE instance() const SW_NOEXCEPT { return hInstance; }
-        SW_CONSTEXPR const string_t& cmd_line() const SW_NOEXCEPT { return cline; }
-        SW_CONSTEXPR int cmd_show() const SW_NOEXCEPT { return cshow; }
+        constexpr HINSTANCE instance() const noexcept { return hInstance; }
+        constexpr const string_t& cmd_line() const noexcept { return cline; }
+        constexpr int cmd_show() const noexcept { return cshow; }
 
     private:
         int wnd_num;
@@ -63,7 +63,7 @@ namespace sw
         native_window() = default;
         virtual ~native_window();
 
-        SW_CONSTEXPR HWND handle() const SW_NOEXCEPT { return hWnd; }
+        constexpr HWND handle() const noexcept { return hWnd; }
 
     protected:
         window_create_params create_params;

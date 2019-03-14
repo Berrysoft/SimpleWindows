@@ -11,7 +11,7 @@ namespace sw
     template <typename T>
     struct gdi_delete
     {
-        SW_CONSTEXPR gdi_delete() SW_NOEXCEPT = default;
+        constexpr gdi_delete() noexcept = default;
         void operator()(T* ptr) const
         {
             SW_ASSERT_EXPR(DeleteObject(ptr), DELETE_OBJECT_FAILED);
