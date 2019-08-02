@@ -54,9 +54,6 @@
     <ClInclude Include="array_view.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="com_ptr.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="itemdlg.h">
       <Filter>头文件</Filter>
     </ClInclude>

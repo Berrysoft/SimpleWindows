@@ -23,7 +23,7 @@ namespace sw
         void parent(control_container* c);
 
         font_obs_ptr ctrl_font() const;
-        void ctrl_font(font_ptr&& p);
+        void ctrl_font(wil::unique_hfont&& p);
 
         string_t text() const;
         void text(const string_t& s);

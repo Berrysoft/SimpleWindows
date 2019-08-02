@@ -26,7 +26,7 @@ mainwnd::mainwnd() : window(L"Test"), x(300), y(300)
 
     add_control(test_button);
     test_button.is_default(true);
-    test_button.text(L"ƒ„∫√£°");
+    test_button.text(L"‰Ω†Â•ΩÔºÅ");
     test_button.link_note(L"Show a message box.");
     test_button.full_rect({ 100, 100, 400, 200 });
     test_button.shield(true);
@@ -40,7 +40,7 @@ void mainwnd::draw_rect(window&, dev_context& dc)
     dc.set_pen(pen{ PS_SOLID, 3, RGB(192, 192, 0) });
     auto b = dc.set_brush(solid_brush{ RGB(192, 192, 0) });
     dc.draw_rect({ x - 100, y - 100, x + 100, y + 100 });
-    dc.set_brush(move(b));
+    dc.set_brush(std::move(b));
 }
 
 void mainwnd::draw_circ(window&, dev_context& dc)
@@ -48,7 +48,7 @@ void mainwnd::draw_circ(window&, dev_context& dc)
     dc.set_pen(pen{ PS_SOLID, 2, RGB(0, 192, 192) });
     auto b = dc.set_brush(hatch_brush{ HS_DIAGCROSS, RGB(0, 192, 192) });
     dc.draw_ellipse({ x - 100, y - 100, x + 100, y + 100 });
-    dc.set_brush(move(b));
+    dc.set_brush(std::move(b));
 }
 
 void mainwnd::draw_cross(window&, dev_context& dc)

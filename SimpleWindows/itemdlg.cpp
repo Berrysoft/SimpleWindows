@@ -1,10 +1,13 @@
 #include "itemdlg.h"
 
+#include <wil/resource.h>
+
 #ifndef SW_ASSERT_HRESULT
 #define SW_ASSERT_HRESULT(exp) SW_ASSERT((exp) == S_OK)
 #endif // !SW_ASSERT_HRESULT
 
 using namespace std;
+using namespace wil;
 
 namespace sw
 {
@@ -47,7 +50,7 @@ namespace sw
 
     wstring item_dlg::filename() const
     {
-        co_task_mem_ptr<WCHAR> name;
+        unique_cotaskmem_string name;
         SW_ASSERT_HRESULT(native_dlg->GetFileName(&name));
         wstring result = name.get();
         return result;
@@ -81,7 +84,7 @@ namespace sw
     {
         com_ptr<IShellItem> item;
         SW_ASSERT_HRESULT(native_dlg->GetResult(&item));
-        co_task_mem_ptr<WCHAR> name;
+        unique_cotaskmem_string name;
         SW_ASSERT_HRESULT(item->GetDisplayName(SIGDN_FILESYSPATH, &name));
         wstring result = name.get();
         return result;
@@ -103,7 +106,7 @@ namespace sw
         {
             com_ptr<IShellItem> item;
             SW_ASSERT_HRESULT(items->GetItemAt(i, &item));
-            co_task_mem_ptr<WCHAR> name;
+            unique_cotaskmem_string name;
             SW_ASSERT_HRESULT(item->GetDisplayName(SIGDN_FILESYSPATH, &name));
             result.push_back(name.get());
         }

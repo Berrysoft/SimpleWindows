@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClInclude Include="array_view.h" />
     <ClInclude Include="button.h" />
-    <ClInclude Include="com_ptr.h" />
     <ClInclude Include="control.h" />
     <ClInclude Include="event.h" />
     <ClInclude Include="gdi.h" />

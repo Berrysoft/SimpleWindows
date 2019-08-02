@@ -2,16 +2,16 @@
 #include "utility.h"
 
 #include "array_view.h"
-#include "com_ptr.h"
 #include "window.h"
 #include <ShObjIdl.h>
+#include <wil/com.h>
 
 namespace sw
 {
     class item_dlg
     {
     protected:
-        com_ptr<IFileDialog> native_dlg;
+        wil::com_ptr<IFileDialog> native_dlg;
 
     public:
         HRESULT show();

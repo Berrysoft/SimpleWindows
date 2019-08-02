@@ -1,6 +1,7 @@
 #include "control.h"
 
 using namespace std;
+using namespace wil;
 
 namespace sw
 {
@@ -25,7 +26,7 @@ namespace sw
         return font_obs_ptr(SendMessage(hWnd, WM_GETFONT, 0, 0));
     }
 
-    void common_control::ctrl_font(font_ptr&& p)
+    void common_control::ctrl_font(unique_hfont&& p)
     {
         SendMessage(hWnd, WM_SETFONT, reinterpret_cast<WPARAM>(p.release()), TRUE);
     }

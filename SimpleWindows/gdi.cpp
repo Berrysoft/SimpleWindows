@@ -3,6 +3,7 @@
 #include <windowsx.h>
 
 using namespace std;
+using namespace wil;
 
 namespace sw
 {
@@ -33,7 +34,7 @@ namespace sw
     {
         if (orip)
         {
-            SW_ASSERT_EXPR(DeleteObject(SelectObject(hDC, orip)), DELETE_OBJECT_FAILED);
+            SW_ASSERT_EXPR(DeleteObject(::SelectObject(hDC, orip)), DELETE_OBJECT_FAILED);
             orip = nullptr;
         }
     }
@@ -90,12 +91,12 @@ namespace sw
         SetBkColor(hDC, color);
     }
 
-    template <typename T>
-    constexpr gdi_ptr<T> select_ptr(HDC hDC, T*& orip, gdi_ptr<T>&& p) noexcept
+    template <typename T, typename TPtr>
+    constexpr TPtr select_ptr(HDC hDC, T*& orip, TPtr&& p) noexcept
     {
         if (p)
         {
-            T* result = static_cast<T*>(SelectObject(hDC, p.release()));
+            T* result = static_cast<T*>(::SelectObject(hDC, p.release()));
             if (!orip)
             {
                 orip = result;
@@ -103,7 +104,7 @@ namespace sw
             }
             else
             {
-                return gdi_ptr<T>(result);
+                return TPtr(result);
             }
         }
         else
@@ -114,27 +115,27 @@ namespace sw
             }
             else
             {
-                T* result = static_cast<T*>(SelectObject(hDC, orip));
+                T* result = static_cast<T*>(::SelectObject(hDC, orip));
                 orip = nullptr;
-                return gdi_ptr<T>(result);
+                return TPtr(result);
             }
         }
     }
-    bitmap_ptr dev_context::set_bitmap(bitmap_ptr&& p) noexcept
+    unique_hbitmap dev_context::set_bitmap(unique_hbitmap&& p) noexcept
     {
-        return select_ptr(hDC, oriHBit, move(p));
+        return select_ptr(hDC, oriHBit, std::move(p));
     }
-    brush_ptr dev_context::set_brush(brush_ptr&& p) noexcept
+    unique_hbrush dev_context::set_brush(unique_hbrush&& p) noexcept
     {
-        return select_ptr(hDC, oriHB, move(p));
+        return select_ptr(hDC, oriHB, std::move(p));
     }
-    font_ptr dev_context::set_font(font_ptr&& p) noexcept
+    unique_hfont dev_context::set_font(unique_hfont&& p) noexcept
     {
-        return select_ptr(hDC, oriHF, move(p));
+        return select_ptr(hDC, oriHF, std::move(p));
     }
-    pen_ptr dev_context::set_pen(pen_ptr&& p) noexcept
+    unique_hpen dev_context::set_pen(unique_hpen&& p) noexcept
     {
-        return select_ptr(hDC, oriHP, move(p));
+        return select_ptr(hDC, oriHP, std::move(p));
     }
 
     POINT dev_context::set_org(POINT p) noexcept
@@ -202,7 +203,7 @@ namespace sw
     window_paint_dc::window_paint_dc(HWND hWnd) noexcept : dev_context(), hWnd(hWnd)
     {
         if (hWnd)
-            hDC = BeginPaint(hWnd, &ps);
+            hDC = ::BeginPaint(hWnd, &ps);
     }
     window_paint_dc::~window_paint_dc()
     {
@@ -219,7 +220,7 @@ namespace sw
 
     window_dc::window_dc(HWND hWnd) noexcept : dev_context(), hWnd(hWnd)
     {
-        hDC = GetDC(hWnd);
+        hDC = ::GetDC(hWnd);
     }
     window_dc::~window_dc()
     {

@@ -43,30 +43,30 @@ namespace sw
         COLORREF back_color() const noexcept;
         void back_color(COLORREF color) noexcept;
 
-        bitmap_ptr set_bitmap(bitmap_ptr&& p) noexcept;
+        wil::unique_hbitmap set_bitmap(wil::unique_hbitmap&& p) noexcept;
         template <typename Creater>
-        bitmap_ptr set_bitmap(Creater&& c) noexcept
+        wil::unique_hbitmap set_bitmap(Creater&& c) noexcept
         {
             return set_bitmap(c.create());
         }
 
-        brush_ptr set_brush(brush_ptr&& p) noexcept;
+        wil::unique_hbrush set_brush(wil::unique_hbrush&& p) noexcept;
         template <typename Creater>
-        brush_ptr set_brush(Creater&& c) noexcept
+        wil::unique_hbrush set_brush(Creater&& c) noexcept
         {
             return set_brush(c.create());
         }
 
-        font_ptr set_font(font_ptr&& p) noexcept;
+        wil::unique_hfont set_font(wil::unique_hfont&& p) noexcept;
         template <typename Creater>
-        font_ptr set_font(Creater&& c) noexcept
+        wil::unique_hfont set_font(Creater&& c) noexcept
         {
             return set_font(c.create());
         }
 
-        pen_ptr set_pen(pen_ptr&& p) noexcept;
+        wil::unique_hpen set_pen(wil::unique_hpen&& p) noexcept;
         template <typename Creater>
-        pen_ptr set_pen(Creater&& c) noexcept
+        wil::unique_hpen set_pen(Creater&& c) noexcept
         {
             return set_pen(c.create());
         }

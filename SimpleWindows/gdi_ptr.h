@@ -5,27 +5,10 @@
 #include "string_type.h"
 #include "sw_resources.h"
 #include <memory>
+#include <wil/resource.h>
 
 namespace sw
 {
-    template <typename T>
-    struct gdi_delete
-    {
-        constexpr gdi_delete() noexcept = default;
-        void operator()(T* ptr) const
-        {
-            SW_ASSERT_EXPR(DeleteObject(ptr), DELETE_OBJECT_FAILED);
-        }
-    };
-
-    template <typename T>
-    using gdi_ptr = std::unique_ptr<T, gdi_delete<T>>;
-
-    using bitmap_ptr = gdi_ptr<HBITMAP__>;
-    using brush_ptr = gdi_ptr<HBRUSH__>;
-    using font_ptr = gdi_ptr<HFONT__>;
-    using pen_ptr = gdi_ptr<HPEN__>;
-
     template <typename T>
     using observer_ptr = T*;
 
@@ -40,19 +23,19 @@ namespace sw
         const dev_context& dc;
         int width;
         int height;
-        bitmap_ptr create() const;
+        wil::unique_hbitmap create() const;
     };
 
     struct solid_brush
     {
         COLORREF color;
-        brush_ptr create() const;
+        wil::unique_hbrush create() const;
     };
     struct hatch_brush
     {
         int hatch;
         COLORREF color;
-        brush_ptr create() const;
+        wil::unique_hbrush create() const;
     };
 
     struct font
@@ -71,7 +54,7 @@ namespace sw
         unsigned char clip_precis;
         unsigned char quality;
         unsigned char pitch_family;
-        font_ptr create() const;
+        wil::unique_hfont create() const;
     };
 
     struct pen
@@ -79,6 +62,6 @@ namespace sw
         int style;
         int width;
         COLORREF color;
-        pen_ptr create() const;
+        wil::unique_hpen create() const;
     };
 } // namespace sw
