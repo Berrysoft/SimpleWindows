@@ -178,7 +178,6 @@
     <ClInclude Include="msgbox.h" />
     <ClInclude Include="native.h" />
     <ClInclude Include="string_type.h" />
-    <ClInclude Include="sw_resources.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="window.h" />

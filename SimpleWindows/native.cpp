@@ -1,6 +1,6 @@
 #include "native.h"
 
-#include "sw_resources.h"
+#include <wil/result.h>
 
 using namespace std;
 
@@ -40,7 +40,7 @@ namespace sw
         BOOL bRet;
         while (bRet = take_over_message(msg))
         {
-            SW_ASSERT_EXPR(bRet >= 0, MESSAGE_LOOP_ERROR);
+            THROW_HR_IF(E_FAIL, bRet < 0);
             if (!wnd_num)
                 PostQuitMessage(0);
         }
@@ -51,7 +51,7 @@ namespace sw
     int app::run(const native_window& wnd) const
     {
         ShowWindow(wnd.handle(), cshow);
-        SW_ASSERT(UpdateWindow(wnd.handle()));
+        THROW_IF_WIN32_BOOL_FALSE(UpdateWindow(wnd.handle()));
         return run();
     }
 
@@ -67,7 +67,7 @@ namespace sw
                               params.style, params.x, params.y, params.width, params.height,
                               params.parent ? params.parent->hWnd : nullptr,
                               nullptr, current_app.instance(), nullptr);
-        SW_ASSERT_EXPR(hWnd, CREATE_WND_FAILED);
+        THROW_IF_NULL_ALLOC(hWnd);
     }
 
     LRESULT native_window::wnd_proc(const message& msg)

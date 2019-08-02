@@ -33,9 +33,6 @@
     <ClInclude Include="gdi_internal.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="sw_resources.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="button.h">
       <Filter>头文件</Filter>
     </ClInclude>

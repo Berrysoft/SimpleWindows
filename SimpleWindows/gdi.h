@@ -71,21 +71,21 @@ namespace sw
             return set_pen(c.create());
         }
 
-        POINT set_org(POINT p) noexcept;
+        POINT set_org(POINT p);
 
-        void draw_arc(RECT r, POINT p1, POINT p2) noexcept;
-        void draw_cross(POINT p, int length) noexcept;
-        void draw_ellipse(RECT r) noexcept;
-        void draw_ellipse(POINT p, int radius) noexcept;
-        void draw_line(POINT p1, POINT p2) noexcept;
-        void draw_pie(RECT r, POINT p1, POINT p2) noexcept;
-        void draw_polygon(array_view<POINT> ps) noexcept;
-        void draw_polyline(array_view<POINT> ps) noexcept;
-        void draw_rect(RECT r) noexcept;
-        void draw_roundrect(RECT r, SIZE round) noexcept;
-        void draw_string(POINT p, const string_t& str) noexcept;
+        void draw_arc(RECT r, POINT p1, POINT p2);
+        void draw_cross(POINT p, int length);
+        void draw_ellipse(RECT r);
+        void draw_ellipse(POINT p, int radius);
+        void draw_line(POINT p1, POINT p2);
+        void draw_pie(RECT r, POINT p1, POINT p2);
+        void draw_polygon(array_view<POINT> ps);
+        void draw_polyline(array_view<POINT> ps);
+        void draw_rect(RECT r);
+        void draw_roundrect(RECT r, SIZE round);
+        void draw_string(POINT p, const string_t& str);
 
-        void copy_dc_bit(RECT r, const dev_context& dc, POINT p = { 0, 0 }, DWORD rop = SRCCOPY) const noexcept;
-        void strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop = SRCCOPY) const noexcept;
+        void copy_dc_bit(RECT r, const dev_context& dc, POINT p = { 0, 0 }, DWORD rop = SRCCOPY) const;
+        void strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop = SRCCOPY) const;
     };
 } // namespace sw

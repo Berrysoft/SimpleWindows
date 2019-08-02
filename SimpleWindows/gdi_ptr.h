@@ -3,7 +3,6 @@
 
 #include "native.h"
 #include "string_type.h"
-#include "sw_resources.h"
 #include <memory>
 #include <wil/resource.h>
 

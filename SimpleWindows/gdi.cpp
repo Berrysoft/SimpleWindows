@@ -34,7 +34,7 @@ namespace sw
     {
         if (orip)
         {
-            SW_ASSERT_EXPR(DeleteObject(::SelectObject(hDC, orip)), DELETE_OBJECT_FAILED);
+            THROW_IF_WIN32_BOOL_FALSE(DeleteObject(::SelectObject(hDC, orip)));
             orip = nullptr;
         }
     }
@@ -138,66 +138,67 @@ namespace sw
         return select_ptr(hDC, oriHP, std::move(p));
     }
 
-    POINT dev_context::set_org(POINT p) noexcept
+    POINT dev_context::set_org(POINT p)
     {
         POINT result;
-        SW_ASSERT(SetWindowOrgEx(hDC, p.x, p.y, &result));
+        THROW_IF_WIN32_BOOL_FALSE(SetWindowOrgEx(hDC, p.x, p.y, &result));
         return result;
     }
 
-    void dev_context::draw_arc(RECT r, POINT p1, POINT p2) noexcept
+    void dev_context::draw_arc(RECT r, POINT p1, POINT p2)
     {
-        SW_ASSERT_EXPR(Arc(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Arc(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y));
     }
-    void dev_context::draw_cross(POINT p, int length) noexcept
+    void dev_context::draw_cross(POINT p, int length)
     {
         draw_line({ p.x - length / 2, p.y }, { p.x + length / 2, p.y });
         draw_line({ p.x, p.y - length / 2 }, { p.x, p.y + length / 2 });
     }
-    void dev_context::draw_ellipse(RECT r) noexcept
+    void dev_context::draw_ellipse(RECT r)
     {
-        SW_ASSERT_EXPR(Ellipse(hDC, r.left, r.top, r.right, r.bottom), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Ellipse(hDC, r.left, r.top, r.right, r.bottom));
     }
-    void dev_context::draw_ellipse(POINT p, int radius) noexcept
+    void dev_context::draw_ellipse(POINT p, int radius)
     {
-        SW_ASSERT_EXPR(Ellipse(hDC, p.x - radius, p.y - radius, p.x + radius, p.y + radius), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Ellipse(hDC, p.x - radius, p.y - radius, p.x + radius, p.y + radius));
     }
-    void dev_context::draw_line(POINT p1, POINT p2) noexcept
+    void dev_context::draw_line(POINT p1, POINT p2)
     {
-        SW_ASSERT_EXPR(MoveToEx(hDC, p1.x, p1.y, nullptr) && LineTo(hDC, p2.x, p2.y), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(MoveToEx(hDC, p1.x, p1.y, nullptr));
+        THROW_IF_WIN32_BOOL_FALSE(LineTo(hDC, p2.x, p2.y));
     }
-    void dev_context::draw_pie(RECT r, POINT p1, POINT p2) noexcept
+    void dev_context::draw_pie(RECT r, POINT p1, POINT p2)
     {
-        SW_ASSERT_EXPR(Pie(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Pie(hDC, r.left, r.top, r.right, r.bottom, p1.x, p1.y, p2.x, p2.y));
     }
-    void dev_context::draw_polygon(array_view<POINT> ps) noexcept
+    void dev_context::draw_polygon(array_view<POINT> ps)
     {
-        SW_ASSERT_EXPR(Polygon(hDC, ps.data(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Polygon(hDC, ps.data(), static_cast<int>(ps.size())));
     }
-    void dev_context::draw_polyline(array_view<POINT> ps) noexcept
+    void dev_context::draw_polyline(array_view<POINT> ps)
     {
-        SW_ASSERT_EXPR(Polyline(hDC, ps.data(), static_cast<int>(ps.size())), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Polyline(hDC, ps.data(), static_cast<int>(ps.size())));
     }
-    void dev_context::draw_rect(RECT r) noexcept
+    void dev_context::draw_rect(RECT r)
     {
-        SW_ASSERT_EXPR(Rectangle(hDC, r.left, r.top, r.right, r.bottom), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(Rectangle(hDC, r.left, r.top, r.right, r.bottom));
     }
-    void dev_context::draw_roundrect(RECT r, SIZE round) noexcept
+    void dev_context::draw_roundrect(RECT r, SIZE round)
     {
-        SW_ASSERT_EXPR(RoundRect(hDC, r.left, r.top, r.right, r.bottom, round.cx, round.cy), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(RoundRect(hDC, r.left, r.top, r.right, r.bottom, round.cx, round.cy));
     }
-    void dev_context::draw_string(POINT p, const string_t& str) noexcept
+    void dev_context::draw_string(POINT p, const string_t& str)
     {
-        SW_ASSERT_EXPR(TextOut(hDC, p.x, p.y, str.c_str(), static_cast<int>(str.length())), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(TextOut(hDC, p.x, p.y, str.c_str(), static_cast<int>(str.length())));
     }
 
-    void dev_context::copy_dc_bit(RECT t, const dev_context& dc, POINT p, DWORD rop) const noexcept
+    void dev_context::copy_dc_bit(RECT t, const dev_context& dc, POINT p, DWORD rop) const
     {
-        SW_ASSERT_EXPR(BitBlt(hDC, t.left, t.top, t.right, t.bottom, dc.hDC, p.x, p.y, rop), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(BitBlt(hDC, t.left, t.top, t.right, t.bottom, dc.hDC, p.x, p.y, rop));
     }
-    void dev_context::strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop) const noexcept
+    void dev_context::strech_dc_bit(RECT r, const dev_context& dc, RECT r1, DWORD rop) const
     {
-        SW_ASSERT_EXPR(StretchBlt(hDC, r.left, r.top, r.right - r.left, r.bottom - r.top, dc.hDC, r1.left, r1.top, r1.right - r1.left, r1.bottom - r1.top, rop), GDI_DRAWING_FAILED);
+        THROW_IF_WIN32_BOOL_FALSE(StretchBlt(hDC, r.left, r.top, r.right - r.left, r.bottom - r.top, dc.hDC, r1.left, r1.top, r1.right - r1.left, r1.bottom - r1.top, rop));
     }
 
     window_paint_dc::window_paint_dc(HWND hWnd) noexcept : dev_context(), hWnd(hWnd)
@@ -212,7 +213,7 @@ namespace sw
             dev_context::~dev_context();
             if (hWnd && hDC)
             {
-                SW_ASSERT_EXPR(EndPaint(hWnd, &ps), RELEASE_DC_FAILED);
+                THROW_IF_WIN32_BOOL_FALSE(EndPaint(hWnd, &ps));
                 hWnd = nullptr;
             }
         }
@@ -227,7 +228,7 @@ namespace sw
         if (!released)
         {
             dev_context::~dev_context();
-            SW_ASSERT_EXPR(ReleaseDC(hWnd, hDC), RELEASE_DC_FAILED);
+            THROW_IF_WIN32_BOOL_FALSE(ReleaseDC(hWnd, hDC));
         }
     }
 
@@ -242,7 +243,7 @@ namespace sw
         if (!released)
         {
             dev_context::~dev_context();
-            SW_ASSERT_EXPR(ReleaseDC(hWnd, hDC), RELEASE_DC_FAILED);
+            THROW_IF_WIN32_BOOL_FALSE(ReleaseDC(hWnd, hDC));
         }
     }
 } // namespace sw

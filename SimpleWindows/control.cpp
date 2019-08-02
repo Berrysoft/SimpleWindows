@@ -41,25 +41,25 @@ namespace sw
 
     void common_control::text(const string_t& s)
     {
-        SW_ASSERT(SetWindowText(hWnd, s.c_str()));
+        THROW_IF_WIN32_BOOL_FALSE(SetWindowText(hWnd, s.c_str()));
     }
 
     RECT common_control::full_rect() const
     {
         RECT result;
-        SW_ASSERT(GetWindowRect(hWnd, &result));
+        THROW_IF_WIN32_BOOL_FALSE(GetWindowRect(hWnd, &result));
         return result;
     }
 
     void common_control::full_rect(RECT rect, bool redraw)
     {
-        SW_ASSERT(MoveWindow(hWnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, redraw));
+        THROW_IF_WIN32_BOOL_FALSE(MoveWindow(hWnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, redraw));
     }
 
     RECT common_control::client_rect() const
     {
         RECT result;
-        SW_ASSERT(GetClientRect(hWnd, &result));
+        THROW_IF_WIN32_BOOL_FALSE(GetClientRect(hWnd, &result));
         return result;
     }
 

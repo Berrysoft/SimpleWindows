@@ -33,7 +33,7 @@ namespace sw
             }
             string_t clsname = TEXT("Windows.") + tname;
             cls.lpszClassName = clsname.c_str();
-            SW_ASSERT_EXPR(RegisterClassEx(&cls), CREATE_WND_FAILED);
+            THROW_IF_WIN32_BOOL_FALSE((BOOL)RegisterClassEx(&cls));
             classes.emplace(style, clsname);
             create_params.class_name = clsname;
         }
@@ -90,7 +90,7 @@ namespace sw
     void window::show() const
     {
         ShowWindow(hWnd, SW_SHOW);
-        SW_ASSERT(BringWindowToTop(hWnd));
+        THROW_IF_WIN32_BOOL_FALSE(BringWindowToTop(hWnd));
     }
 
     void window::show(int show) const
@@ -112,7 +112,7 @@ namespace sw
         {
             MSG msg;
             BOOL bRet = take_over_message(msg);
-            SW_ASSERT_EXPR(bRet >= 0, MESSAGE_LOOP_ERROR);
+            THROW_HR_IF(E_FAIL, bRet < 0);
             if (!bRet)
                 break;
         }
@@ -128,7 +128,7 @@ namespace sw
 
     void window::refresh(bool redraw) const
     {
-        SW_ASSERT(InvalidateRect(hWnd, nullptr, redraw));
+        THROW_IF_WIN32_BOOL_FALSE(InvalidateRect(hWnd, nullptr, redraw));
     }
 
     void window::close() const
@@ -286,11 +286,11 @@ namespace sw
             break;
         }
         case WM_SIZE:
-		{
+        {
             SIZE args = { LOWORD(msg.lParam), HIWORD(msg.lParam) };
             on_size_changed(*this, args);
             break;
-		}
+        }
         case WM_COMMAND:
         {
             switch (HIWORD(msg.wParam))

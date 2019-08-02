@@ -18,7 +18,7 @@ namespace sw
             howner,
             text.c_str(),
             caption.c_str(),
-            button | icon | def_button | options | (show_help ? 0x4000 : 0)));
+            (int)button | (int)icon | (int)def_button | (int)options | (show_help ? 0x4000 : 0)));
     }
 
     taskdlg_result taskdlg::show() const
@@ -105,8 +105,7 @@ namespace sw
         config.cxWidth = width;
         int ibutton, iradio;
         BOOL verify;
-        HRESULT result = TaskDialogIndirect(&config, &ibutton, &iradio, &verify);
-        SW_ASSERT(result == S_OK);
+        THROW_IF_FAILED(TaskDialogIndirect(&config, &ibutton, &iradio, &verify));
         return { ibutton, iradio, static_cast<bool>(verify) };
     }
 } // namespace sw
