@@ -2,6 +2,7 @@
 #include "utility.h"
 
 #include <initializer_list>
+#include <iterator>
 
 namespace sw
 {
