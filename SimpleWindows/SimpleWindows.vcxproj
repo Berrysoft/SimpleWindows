@@ -197,9 +197,6 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include=".clang-format" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
