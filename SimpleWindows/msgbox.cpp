@@ -36,9 +36,8 @@ namespace sw
         auto* callback = reinterpret_cast<std::function<HRESULT(const message&)>*>(data);
         if (callback && *callback)
         {
-            auto& f = *callback;
             message msg = { hWnd, notification, wParam, lParam };
-            return f(msg);
+            return (*callback)(msg);
         }
         return S_FALSE;
     }
